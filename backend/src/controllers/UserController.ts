@@ -4,6 +4,7 @@ import { UserService } from '../services/UserService';
 import { json } from 'stream/consumers';
 
 import { validate as isUUId } from 'uuid';
+import { generateToken } from '../util/generateToken';
 
 const userService = new UserService(new UserRepo());
 export class UserController {
@@ -18,7 +19,9 @@ export class UserController {
     }
 
     const newUser = await userService.createUser(req.body);
-    res.status(201).json(newUser);
+
+    const token = generateToken(newUser.id);
+    res.status(201).json({ token: token });
     return;
   }
 
