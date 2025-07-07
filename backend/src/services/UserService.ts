@@ -1,6 +1,5 @@
 import { User } from '../entities/User';
 import IUser from '../interface/IUser';
-
 import bcrypt from 'bcrypt';
 
 export class UserService {
@@ -18,11 +17,22 @@ export class UserService {
     return await this.userRepo.findById(id);
   }
 
-  public async loginUser(email: string, password: string) {
-    const user = this.userRepo.findByEmail(email);
+  public async loginUser(
+    email: string,
+    password: string
+  ): Promise<User | null> {
+    const user = await this.userRepo.findByEmail(email);
 
     if (!user) {
-      throw new Error('');
+      throw new Error('Invalid');
     }
+
+    const isTrue = await bcrypt.compare(user.password, password);
+
+    if (!isTrue) {
+      throw new Error('Invalid');
+    }
+
+    return user;
   }
 }

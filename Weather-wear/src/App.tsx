@@ -1,13 +1,27 @@
+import { useSelector } from "react-redux";
 import "./App.css";
-import { Person } from "./Person";
+import type { RootState } from "./store/store";
+import { useDispatch } from "react-redux";
+import { decrement, increment } from "./store/counter/CounterSlice";
 
 function App() {
-  let name: string = "Ivan";
-  let age: number = 21;
+  const count = useSelector((state: RootState) => state.counter.value);
+  const dispatch = useDispatch();
 
+  const add = (): void => {
+    dispatch(increment());
+  };
+
+  const sub = (): void => {
+    dispatch(decrement());
+  };
   return (
     <>
-      <Person />
+      <h1>Hello World</h1>
+      <h1>{count}</h1>
+
+      <button onClick={add}>increment</button>
+      <button onClick={sub}>decerement</button>
     </>
   );
 }

@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
 import { UserRepo } from '../repositories/UserRepo';
 import { UserService } from '../services/UserService';
-import { json } from 'stream/consumers';
-
 import { validate as isUUId } from 'uuid';
 import { generateToken } from '../util/generateToken';
 
@@ -18,10 +16,46 @@ export class UserController {
       return;
     }
 
-    const newUser = await userService.createUser(req.body);
+    try {
+      const newUser = await userService.createUser(req.body);
+      const token = generateToken(newUser.id);
 
-    const token = generateToken(newUser.id);
-    res.status(201).json({ token: token });
+      res
+        .status(201)
+        .cookie('token', token, {
+          httpOnly: true,
+          secure: false, // Set to true in production with HTTPS
+          sameSite: 'lax',
+        })
+        .json({ message: 'User created successfully' });
+      return;
+    } catch (error) {
+      res.status(500).json({ message: 'Internal server error' });
+      return;
+    }
+  }
+
+  static async login(req: Request, res: Response) {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      res.status(400).json({ message: 'Invalid email or password' });
+      return;
+    }
+
+    const user = await userService.loginUser(email, password);
+
+    if (!user) {
+      res.status(400).json({ message: 'Invalid email or password' });
+      return;
+    }
+    const token = generateToken(user.id);
+
+    res.status(200).cookie('token', token, {
+      httpOnly: true,
+      secure: false, // Set to true in production with HTTPS
+      sameSite: 'lax',
+    });
     return;
   }
 

@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 import express from 'express';
 import UserRoutes from './routes/UserRoutes';
 import { AppDataSource } from './config/data-source';
