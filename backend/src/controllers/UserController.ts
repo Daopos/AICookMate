@@ -51,11 +51,14 @@ export class UserController {
     }
     const token = generateToken(user.id);
 
-    res.status(200).cookie('token', token, {
-      httpOnly: true,
-      secure: false, // Set to true in production with HTTPS
-      sameSite: 'lax',
-    });
+    res
+      .status(200)
+      .cookie('token', token, {
+        httpOnly: true,
+        secure: false, // Set to true in production with HTTPS
+        sameSite: 'lax',
+      })
+      .json({ message: 'Successfully login' });
     return;
   }
 
