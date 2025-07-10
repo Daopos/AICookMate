@@ -15,17 +15,18 @@
   content: '';
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.4); /* 👈 semi-transparent black overlay */
+  background-color: rgba(0, 0, 0, 0.6); /* 👈 semi-transparent black overlay */
   z-index: 1;
 }
 
 .authBackground > div {
     position: relative;
     z-index: 2; /* 👈 Put content above overlay */
-    min-width: 500px;
+    min-width: 600px;
     border-radius: 20px;
     background-color: rgba(255, 255, 255, 0.15);
     color: white;
+    padding: 20px 55px;
 }
 
 .orDivider {
@@ -44,4 +45,11 @@
     width: 100%;
     height:1px;
     margin: 0 10px;
+}
+
+.logoText {
+    background: -webkit-linear-gradient(140deg,#347433, #FFC107);
+    font-weight: bolder;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
