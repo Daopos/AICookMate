@@ -1,10 +1,12 @@
 import express from 'express';
 import UserRoutes from './routes/UserRoutes';
 import { AppDataSource } from './config/data-source';
+import cors from 'cors';
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.use('/api/v1/user', UserRoutes);
 

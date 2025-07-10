@@ -27,7 +27,7 @@ export class UserController {
           secure: false, // Set to true in production with HTTPS
           sameSite: 'lax',
         })
-        .json({ message: 'User created successfully' });
+        .json({ message: 'User created successfully', name: newUser.name });
       return;
     } catch (error) {
       res.status(500).json({ message: 'Internal server error' });
