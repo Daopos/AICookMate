@@ -1,20 +1,35 @@
-import { Button, Form, Stack } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import style from "./Login.module.css";
 import GoogleIcon from "../../assets/images/google.png";
 import FacebookIcon from "../../assets/images/facebook.png";
-import { Link } from "react-router-dom";
-import { useSignup } from "../../viewmodels/userSIgnup";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, type FormEvent } from "react";
-import type { authSignup } from "../../model/User";
+import authService from "../../services/authService";
+import type { SignupData } from "../../types/Auth";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../store/store";
+import { setToken } from "../../store/auth/tokenSlice";
 
 const Signup = () => {
-  const { signup, loading, error, user } = useSignup();
+  const navigate = useNavigate();
 
-  const [form, setForm] = useState<authSignup>({
+  const dispatch = useDispatch<AppDispatch>();
+
+  const [form, setForm] = useState<SignupData>({
     name: "",
     email: "",
     password: "",
   });
+
+  const [confirmPassowrd, setConfirmPassword] = useState<string>();
+
+  const [error, setError] = useState<boolean>(false);
+
+  const handleChangeCOnfirm = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setConfirmPassword(event.target.value);
+
+    console.log(confirmPassowrd);
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setForm((prevalue) => {
@@ -25,10 +40,22 @@ const Signup = () => {
     });
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
 
-    signup(form);
+    if (form.password !== confirmPassowrd) {
+      setError(true);
+      return;
+    }
+
+    try {
+      const result = await authService.authSignup(form);
+      dispatch(setToken({ name: result.name, token: result.token }));
+      navigate("/home");
+    } catch (err) {
+      console.log(err);
+      setError(true);
+    }
   };
 
   return (
@@ -73,7 +100,7 @@ const Signup = () => {
               name="confirm_password"
               type="password"
               placeholder="Password"
-              onChange={handleChange}
+              onChange={handleChangeCOnfirm}
             />
           </Form.Group>
           <Button variant="primary" type="submit" className="w-100">

@@ -1,19 +1,23 @@
-import { useSelector } from "react-redux";
 import "./App.css";
-import type { RootState } from "./store/store";
-import { useDispatch } from "react-redux";
-import { decrement, increment } from "./store/counter/CounterSlice";
 import Login from "./pages/auth/Login";
-import { BrowserRouter, Route, Router, Routes } from "react-router";
+import { BrowserRouter, Route, Routes } from "react-router";
 import Signup from "./pages/auth/Signup";
+import Home from "./pages/home/Home";
+import ProtectedRoutes from "./util/ProtectedRoutes";
+import IsLogin from "./util/IsLogin";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route element={<IsLogin />}>
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+          </Route>
+          <Route element={<ProtectedRoutes />}>
+            <Route path="/home" element={<Home />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </>

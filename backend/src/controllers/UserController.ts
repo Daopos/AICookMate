@@ -20,17 +20,14 @@ export class UserController {
       const newUser = await userService.createUser(req.body);
       const token = generateToken(newUser.id);
 
-      res
-        .status(201)
-        .cookie('token', token, {
-          httpOnly: true,
-          secure: false, // Set to true in production with HTTPS
-          sameSite: 'lax',
-        })
-        .json({ message: 'User created successfully', name: newUser.name });
+      res.status(201).json({
+        message: 'User created successfully',
+        sname: newUser.name,
+        token: token,
+      });
       return;
     } catch (error) {
-      res.status(500).json({ message: 'Internal server error' });
+      res.status(500).json({ error: error, message: 'Internal server error' });
       return;
     }
   }

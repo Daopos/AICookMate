@@ -1,4 +1,4 @@
-import { Button, Form, Stack } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import style from "./Login.module.css";
 import GoogleIcon from "../../assets/images/google.png";
 import FacebookIcon from "../../assets/images/facebook.png";
