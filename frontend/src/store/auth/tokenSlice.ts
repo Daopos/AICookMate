@@ -2,12 +2,12 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 interface AuthState {
   name: string | null;
-  token: string;
+  token: null | string;
 }
 
 const initialState: AuthState = {
-  name: JSON.parse(localStorage.getItem("name") || "null"),
-  token: JSON.parse(localStorage.getItem("token") || "null"),
+  name: localStorage.getItem("name") || "null",
+  token: localStorage.getItem("token") || "null",
 };
 
 const tokenSlice = createSlice({
@@ -26,7 +26,7 @@ const tokenSlice = createSlice({
     },
     clearToken: (state) => {
       state.token = "";
-      state.token = "";
+      state.name = "";
       localStorage.removeItem("name");
       localStorage.removeItem("secret");
     },

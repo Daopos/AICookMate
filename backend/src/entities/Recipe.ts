@@ -1,10 +1,4 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity({ name: 'recipes' })
 export class Recipe {
@@ -13,4 +7,7 @@ export class Recipe {
 
   @Column({ nullable: false })
   title!: string;
+
+  @Column({ nullable: false })
+  AIGenerated!: string;
 }

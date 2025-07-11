@@ -23,13 +23,7 @@ export class UserService {
   ): Promise<User | null> {
     const user = await this.userRepo.findByEmail(email);
 
-    if (!user) {
-      throw new Error('Invalid');
-    }
-
-    const isTrue = await bcrypt.compare(user.password, password);
-
-    if (!isTrue) {
+    if (!user || !(await bcrypt.compare(password, user.password))) {
       throw new Error('Invalid');
     }
 

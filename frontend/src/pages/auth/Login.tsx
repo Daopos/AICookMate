@@ -2,23 +2,74 @@ import { Button, Form } from "react-bootstrap";
 import style from "./Login.module.css";
 import GoogleIcon from "../../assets/images/google.png";
 import FacebookIcon from "../../assets/images/facebook.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import type { SignupData } from "../../types/Auth";
+import { useState, type FormEvent } from "react";
+import authService from "../../services/authService";
+import { useDispatch } from "react-redux";
+import { setToken } from "../../store/auth/tokenSlice";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [error, setError] = useState(false);
+
+  const [formData, setFormData] = useState<Omit<SignupData, "name">>({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => {
+      return {
+        ...prev,
+        [event.target.name]: event.target.value,
+      };
+    });
+  };
+
+  const handleSubmit = async (e: FormEvent): Promise<void> => {
+    e.preventDefault();
+
+    console.log(formData);
+    try {
+      const result = await authService.authLogin(formData);
+      dispatch(setToken({ name: result.name, token: result.token }));
+
+      navigate("/home");
+    } catch (err) {
+      console.log(err);
+      setError(true);
+    }
+  };
+
   return (
     <div className={style.authBackground} style={{ minHeight: "100vh" }}>
       <div>
         <h1 className={`${style.logoText}`}>AICookMate</h1>
         <h2 className="fw-bold ">Login</h2>
-        {/* <Form.Text className="text-muted">Invalid Credentials</Form.Text> */}
-        <Form>
+        {error && (
+          <Form.Text className="text-muted">Invalid Credentials</Form.Text>
+        )}
+        <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" />
+            <Form.Control
+              name="email"
+              type="email"
+              placeholder="Enter email"
+              onChange={handleChange}
+            />
           </Form.Group>
           <Form.Group className="mb-4" controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" />
+            <Form.Control
+              name="password"
+              type="password"
+              placeholder="Password"
+              onChange={handleChange}
+            />
           </Form.Group>
           <Button variant="primary" type="submit" className="w-100">
             Submit

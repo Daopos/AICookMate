@@ -27,8 +27,6 @@ const Signup = () => {
 
   const handleChangeCOnfirm = (event: React.ChangeEvent<HTMLInputElement>) => {
     setConfirmPassword(event.target.value);
-
-    console.log(confirmPassowrd);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +48,10 @@ const Signup = () => {
 
     try {
       const result = await authService.authSignup(form);
+
+      console.log(result);
       dispatch(setToken({ name: result.name, token: result.token }));
+
       navigate("/home");
     } catch (err) {
       console.log(err);
@@ -67,7 +68,7 @@ const Signup = () => {
           <Form.Text className=" text-danger">Invalid Credentials</Form.Text>
         )}
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Group className="mb-3" controlId="name">
             <Form.Label>Name</Form.Label>
             <Form.Control
               name="name"
@@ -94,7 +95,7 @@ const Signup = () => {
               onChange={handleChange}
             />
           </Form.Group>
-          <Form.Group className="mb-4" controlId="formBasicPassword">
+          <Form.Group className="mb-4" controlId="confirPassword">
             <Form.Label>Confirm Password</Form.Label>
             <Form.Control
               name="confirm_password"

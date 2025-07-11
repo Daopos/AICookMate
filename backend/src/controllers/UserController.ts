@@ -22,7 +22,7 @@ export class UserController {
 
       res.status(201).json({
         message: 'User created successfully',
-        sname: newUser.name,
+        name: newUser.name,
         token: token,
       });
       return;
@@ -39,24 +39,25 @@ export class UserController {
       res.status(400).json({ message: 'Invalid email or password' });
       return;
     }
+    try {
+      const user = await userService.loginUser(email, password);
 
-    const user = await userService.loginUser(email, password);
+      if (!user) {
+        res.status(400).json({ message: 'Invalid email or password' });
+        return;
+      }
+      const token = generateToken(user.id);
 
-    if (!user) {
-      res.status(400).json({ message: 'Invalid email or password' });
+      res.status(201).json({
+        message: 'User created successfully',
+        name: user.name,
+        token: token,
+      });
+      return;
+    } catch (err) {
+      res.status(500).json({ err: err });
       return;
     }
-    const token = generateToken(user.id);
-
-    res
-      .status(200)
-      .cookie('token', token, {
-        httpOnly: true,
-        secure: false, // Set to true in production with HTTPS
-        sameSite: 'lax',
-      })
-      .json({ message: 'Successfully login' });
-    return;
   }
 
   static async getById(req: Request, res: Response) {
