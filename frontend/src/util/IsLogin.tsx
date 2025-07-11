@@ -4,7 +4,9 @@ import type { RootState } from "../store/store"; // Adjust the path if your stor
 
 const IsLogin = () => {
   const token = useSelector((state: RootState) => state.auth.token);
-  return token === null ? <Outlet /> : <Navigate to="/home" />;
+  console.log("🔐 token:", token);
+
+  return token ? <Navigate to="/home" /> : <Outlet />;
 };
 
 export default IsLogin;
