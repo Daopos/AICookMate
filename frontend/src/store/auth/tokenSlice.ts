@@ -7,7 +7,7 @@ interface AuthState {
 
 const initialState: AuthState = {
   name: localStorage.getItem("name") || "null",
-  token: localStorage.getItem("token") || "null",
+  token: localStorage.getItem("secret") || "null",
 };
 
 const tokenSlice = createSlice({
