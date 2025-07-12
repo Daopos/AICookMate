@@ -9,6 +9,7 @@
     "lint": "eslint 'src/**/*.{ts,tsx}' --fix",
     "format": "prettier --write 'src/**/*.{ts,tsx}'",
     "typeorm": "typeorm-ts-node-commonjs",
+    "revert": "npm run typeorm migration:revert -- --dataSource=src/config/data-source.ts",
     "typeorm:migrate:generate": "typeorm-ts-node-commonjs migration:generate ./src/migrations/AutoMigration --dataSource src/config/data-source.ts",
     "typeorm:migrate:run": "typeorm-ts-node-commonjs migration:run --dataSource src/config/data-source.ts"
   },

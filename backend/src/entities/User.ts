@@ -4,7 +4,9 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { Recipe } from './Recipe';
 
 @Entity({ name: 'users' })
 export class User {
@@ -28,6 +30,9 @@ export class User {
 
   @Column({ default: 'user' })
   role!: string;
+
+  @OneToMany(() => Recipe, (recipe) => recipe.user)
+  recipes!: Recipe[];
 
   @CreateDateColumn()
   createdAt!: Date;

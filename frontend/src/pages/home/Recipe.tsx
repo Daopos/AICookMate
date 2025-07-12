@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useGemini } from "../../hooks/useGemini";
+import { BookMarked } from "lucide-react";
 
 const Recipe = () => {
   const [input, SetInput] = useState<string>("");
@@ -31,14 +32,16 @@ const Recipe = () => {
           onChange={handleChange}
         />
         <Button type="submit" className="w-25" disabled={loading}>
-          Submit
+          Generate
         </Button>
       </Form>
 
       <div className="mt-3 w-75 bg-light rounded p-5">
         <div className="d-flex justify-content-between">
           <h1>Recipe:</h1>
-          <Button>Saved</Button>
+          <Button variant="outline-light" disabled>
+            <BookMarked color="black" />
+          </Button>
         </div>
         <hr className="mt-4" />
         <div>

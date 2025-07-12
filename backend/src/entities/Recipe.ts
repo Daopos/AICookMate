@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { User } from './User';
 
 @Entity({ name: 'recipes' })
 export class Recipe {
@@ -10,4 +11,7 @@ export class Recipe {
 
   @Column({ nullable: false })
   AIGenerated!: string;
+
+  @ManyToOne(() => User, (user) => user.recipes)
+  user!: User;
 }
