@@ -5,7 +5,7 @@ import style from "./Sidebar.module.css";
 
 const Sidebar = () => {
   return (
-    <div className="bg-warning p-5">
+    <div className=" p-5" style={{ backgroundColor: "#F8FAFC" }}>
       <div className="p-4">
         <h3 className={`logo`}>AICookMate</h3>
       </div>
