@@ -5,6 +5,9 @@ import Signup from "./pages/auth/Signup";
 import Home from "./pages/home/Home";
 import ProtectedRoutes from "./util/ProtectedRoutes";
 import IsLogin from "./util/IsLogin";
+import Display from "./pages/home/Display";
+import Recipe from "./pages/home/Recipe";
+import Saved from "./pages/home/Saved";
 
 function App() {
   return (
@@ -12,12 +15,15 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route element={<IsLogin />}>
-            <Route path="/" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
           </Route>
           <Route element={<ProtectedRoutes />}>
-            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Home />}>
+              <Route path="/home" element={<Display />} />
+              <Route path="/Recipe" element={<Recipe />} />
+              <Route path="/Saved" element={<Saved />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

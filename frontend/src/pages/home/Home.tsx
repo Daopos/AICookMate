@@ -1,7 +1,13 @@
+import { Outlet } from "react-router-dom";
+import Sidebar from "../../components/Sidebar";
+
 const Home = () => {
   return (
-    <div>
-      <h1>Hello World</h1>
+    <div className="d-flex" style={{ minHeight: "100vh" }}>
+      <Sidebar />
+      <main className="bg-dark w-100 text-bg-light p-4">
+        <Outlet />
+      </main>
     </div>
   );
 };
