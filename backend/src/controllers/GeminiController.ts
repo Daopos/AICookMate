@@ -61,7 +61,7 @@ Fluff the rice and serve with fresh herbs if desired.
       },
     });
 
-    res.status(200).json({ message: response.text });
+    res.status(200).json({ prompt: response.text });
     return;
   }
 }
