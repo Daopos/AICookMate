@@ -14,7 +14,12 @@ declare module 'express' {
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:5173', // your frontend URL
+    credentials: true,
+  })
+);
 
 app.use('/api/v1/user', UserRoutes);
 app.use('/api/v1', GeminiRoutes);

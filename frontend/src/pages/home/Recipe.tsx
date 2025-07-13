@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useGemini } from "../../hooks/useGemini";
 import { BookMarked } from "lucide-react";
+import { useSaveRecipe } from "../../hooks/useSaveRecipe";
+import type { saveRecipe } from "../../types/Recipe";
 
 const Recipe = () => {
   const [input, SetInput] = useState<string>("");
@@ -16,8 +18,12 @@ const Recipe = () => {
     event.preventDefault();
 
     postRecipe({ prompt: input });
+  };
 
-    console.log(data);
+  const { saveRecipe } = useSaveRecipe();
+
+  const handleSave = () => {
+    saveRecipe(data as saveRecipe);
   };
 
   return (
@@ -39,7 +45,7 @@ const Recipe = () => {
       <div className="mt-3 w-75 bg-light rounded p-5">
         <div className="d-flex justify-content-between">
           <h1>Recipe:</h1>
-          <Button variant="outline-light" disabled>
+          <Button variant="outline-light" onClick={handleSave}>
             <BookMarked color="black" />
           </Button>
         </div>

@@ -5,27 +5,30 @@ import style from "./Sidebar.module.css";
 
 const Sidebar = () => {
   return (
-    <div className=" p-5" style={{ backgroundColor: "#F8FAFC" }}>
+    <div
+      className=" p-5 bg-dark text-light"
+      style={{ backgroundColor: "#F8FAFC" }}
+    >
       <div className="p-4">
         <h3 className={`logo`}>AICookMate</h3>
       </div>
       <div className="d-flex flex-column align-items-center gap-4 mt-4">
         <Link
-          className={`d-flex align-items-center gap-2 fs-5 ${style.navItem}`}
+          className={`d-flex align-items-center gap-2 fs-5 text-light ${style.navItem}`}
           to={"/home"}
         >
           <House />
           Home
         </Link>
         <Link
-          className={`d-flex align-items-center gap-2 fs-5 ${style.navItem}`}
+          className={`d-flex align-items-center gap-2 fs-5 text-light ${style.navItem}`}
           to={"/recipe"}
         >
           <CookingPot />
           Recipe
         </Link>
         <Link
-          className={`d-flex align-items-center gap-2 fs-5 ${style.navItem}`}
+          className={`d-flex align-items-center gap-2 fs-5 text-light ${style.navItem}`}
           to={"/saved"}
         >
           <BookMarked />
