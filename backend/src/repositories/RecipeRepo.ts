@@ -22,4 +22,8 @@ export class RecipeRepo implements IRecipe {
   public async deleteById(id: string): Promise<void> {
     await this.repo.delete({ id: id });
   }
+
+  public async findByUser(userId: string): Promise<Recipe[]> {
+    return await this.repo.find({ where: { user: { id: userId } } });
+  }
 }

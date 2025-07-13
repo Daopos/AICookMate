@@ -56,4 +56,13 @@ export class RecipeService {
 
     await this.recipeRepo.deleteById(id);
   }
+
+  public async getRecipeByUser(userId: string): Promise<Recipe[]> {
+    const recipes = await this.recipeRepo.findByUser(userId);
+
+    if (!recipes) {
+      throw new Error('Invalid');
+    }
+    return recipes;
+  }
 }

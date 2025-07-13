@@ -1,8 +1,6 @@
-import type { saveRecipe } from "../types/Recipe";
+import type { Recipes, saveRecipe } from "../types/Recipe";
 
 const savedRecipe = async (data: saveRecipe, token: string) => {
-  console.log(data);
-
   const response = await fetch("http://localhost:3000/api/v1/recipe", {
     method: "POST",
     headers: {
@@ -12,8 +10,6 @@ const savedRecipe = async (data: saveRecipe, token: string) => {
     },
     body: JSON.stringify(data),
   });
-  console.log("Response status:", response.status);
-  console.log("Response ok:", response.ok);
   if (!response.ok) {
     throw new Error("Failed to save recipe");
   }
@@ -22,6 +18,23 @@ const savedRecipe = async (data: saveRecipe, token: string) => {
   return json;
 };
 
+const getRecipes = async (token: string): Promise<Recipes[]> => {
+  const response = await fetch("http://localhost:3000/api/v1/recipes", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) {
+    throw new Error("Failed to save recipe");
+  }
+  const json = await response.json();
+  return json;
+};
+
 export default {
   savedRecipe,
+  getRecipes,
 };

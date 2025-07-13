@@ -30,4 +30,17 @@ export class RecipeController {
       return;
     }
   }
+
+  static async getRecipeByUser(req: Request, res: Response) {
+    const userId = req.id;
+
+    if (!userId) {
+      res.status(401).json({ message: 'Invalid User' });
+      return;
+    }
+
+    const recipes = await recipeService.getRecipeByUser(userId);
+    res.status(200).json({ recipes });
+    return;
+  }
 }
