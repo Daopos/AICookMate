@@ -3,6 +3,13 @@ import UserRoutes from './routes/UserRoutes';
 import { AppDataSource } from './config/data-source';
 import cors from 'cors';
 import GeminiRoutes from '../src/routes/GeminiRoute';
+import RecipeRoutes from '../src/routes/RecipeRoute';
+
+declare module 'express' {
+  interface Request {
+    id?: string;
+  }
+}
 
 const app = express();
 
@@ -10,8 +17,8 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/api/v1/user', UserRoutes);
-
 app.use('/api/v1', GeminiRoutes);
+app.use('/api/v1', RecipeRoutes);
 
 AppDataSource.initialize()
   .then(() => console.log('Database connected'))

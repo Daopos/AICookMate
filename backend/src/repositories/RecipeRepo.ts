@@ -10,8 +10,9 @@ export class RecipeRepo implements IRecipe {
     this.repo = AppDataSource.getRepository(Recipe);
   }
 
-  public async create(data: Recipe): Promise<void> {
-    this.repo.create(data);
+  public async create(data: Partial<Recipe>): Promise<void> {
+    const newRecipe = this.repo.create(data);
+    await this.repo.save(newRecipe);
   }
 
   public async findById(id: string): Promise<Recipe | null> {
@@ -19,6 +20,6 @@ export class RecipeRepo implements IRecipe {
   }
 
   public async deleteById(id: string): Promise<void> {
-    this.repo.delete({ id: id });
+    await this.repo.delete({ id: id });
   }
 }
