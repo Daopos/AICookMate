@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Spinner } from "react-bootstrap";
 import { useGemini } from "../../hooks/useGemini";
 import { BookMarked } from "lucide-react";
 import { useSaveRecipe } from "../../hooks/useSaveRecipe";
@@ -20,7 +20,7 @@ const Recipe = () => {
     postRecipe({ prompt: input });
   };
 
-  const { saveRecipe } = useSaveRecipe();
+  const { saveRecipe, saveLoading } = useSaveRecipe();
 
   const handleSave = () => {
     saveRecipe(data as saveRecipe);
@@ -38,21 +38,34 @@ const Recipe = () => {
           onChange={handleChange}
         />
         <Button type="submit" className="w-25" disabled={loading}>
-          Generate
+          {loading ? (
+            <Spinner animation="border" variant="secondary" />
+          ) : (
+            "Generate"
+          )}
         </Button>
       </Form>
-
       <div className="mt-3 w-75 bg-light rounded p-5">
         <div className="d-flex justify-content-between">
           <h1>Recipe:</h1>
-          <Button variant="outline-light" onClick={handleSave}>
-            <BookMarked color="black" />
+          <Button
+            variant="outline-light"
+            onClick={handleSave}
+            disabled={saveLoading || !data}
+          >
+            {saveLoading ? (
+              <Spinner animation="border" variant="secondary" />
+            ) : (
+              <BookMarked color="black" />
+            )}
           </Button>
         </div>
         <hr className="mt-4" />
         <div>
           {loading ? (
-            <p>loading</p>
+            <div className="d-flex justify-content-center">
+              <Spinner animation="border" variant="secondary" />
+            </div>
           ) : (
             <pre style={{ wordBreak: "break-all", whiteSpace: "pre-wrap" }}>
               {data?.prompt}

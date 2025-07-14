@@ -8,6 +8,7 @@ import IsLogin from "./util/IsLogin";
 import Display from "./pages/home/Display";
 import Recipe from "./pages/home/Recipe";
 import Saved from "./pages/home/Saved";
+import ViewRecipe from "./pages/home/ViewRecipe";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
               <Route path="/home" element={<Display />} />
               <Route path="/Recipe" element={<Recipe />} />
               <Route path="/Saved" element={<Saved />} />
+              <Route path="/saved/:id" element={<ViewRecipe />} />
             </Route>
           </Route>
         </Routes>

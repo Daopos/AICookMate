@@ -1,39 +1,43 @@
-import { BookMarked, CookingPot, House } from "lucide-react";
+import { BookMarked, CookingPot, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
-
 import style from "./Sidebar.module.css";
 
 const Sidebar = () => {
   return (
     <div
-      className=" p-5 bg-dark text-light"
-      style={{ backgroundColor: "#F8FAFC" }}
+      className={`d-flex flex-column justify-content-between p-4`}
+      style={{ backgroundColor: "#1E293B", height: "100vh", color: "#F8FAFC" }} // dark bg, light text
     >
-      <div className="p-4">
-        <h3 className={`logo`}>AICookMate</h3>
+      <div>
+        <div className="mb-4">
+          <h3 className={`logo text-white`}>AICookMate</h3>
+        </div>
+
+        <div className="d-flex flex-column gap-3">
+          <Link
+            className={`d-flex align-items-center gap-2 fs-5 text-white ${style.navItem}`}
+            to={"/recipe"}
+          >
+            <CookingPot />
+            Recipe
+          </Link>
+          <Link
+            className={`d-flex align-items-center gap-2 fs-5 text-white ${style.navItem}`}
+            to={"/saved"}
+          >
+            <BookMarked />
+            Saved
+          </Link>
+        </div>
       </div>
-      <div className="d-flex flex-column align-items-center gap-4 mt-4">
-        <Link
-          className={`d-flex align-items-center gap-2 fs-5 text-light ${style.navItem}`}
-          to={"/home"}
+
+      <div>
+        <button
+          className={`btn btn-outline-light d-flex align-items-center gap-2 w-100`}
         >
-          <House />
-          Home
-        </Link>
-        <Link
-          className={`d-flex align-items-center gap-2 fs-5 text-light ${style.navItem}`}
-          to={"/recipe"}
-        >
-          <CookingPot />
-          Recipe
-        </Link>
-        <Link
-          className={`d-flex align-items-center gap-2 fs-5 text-light ${style.navItem}`}
-          to={"/saved"}
-        >
-          <BookMarked />
-          Saved
-        </Link>
+          <LogOut />
+          Logout
+        </button>
       </div>
     </div>
   );

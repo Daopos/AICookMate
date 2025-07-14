@@ -43,4 +43,40 @@ export class RecipeController {
     res.status(200).json({ recipes });
     return;
   }
+
+  static async getRecipeById(req: Request, res: Response) {
+    const recipeId = req.params.id;
+
+    if (!recipeId) {
+      res.status(404).json({ message: 'Recipe Not found' });
+      return;
+    }
+
+    try {
+      const recipe = await recipeService.getRecipeById(recipeId);
+      res.status(200).json({ recipes: recipe });
+      return;
+    } catch (error) {
+      console.error('Error saving recipe:', error);
+      res.status(500).json({ message: 'Internal server error.' });
+      return;
+    }
+  }
+
+  static async deleteRecipeById(req: Request, res: Response) {
+    const recipeId = req.params.id;
+
+    if (!recipeId) {
+      res.status(404).json({ message: 'Recipe Not found' });
+      return;
+    }
+    try {
+      await recipeService.deleteRecipeById(recipeId);
+      res.status(200).json({ message: 'successfully delete recipe' });
+      return;
+    } catch {
+      res.status(500).json({ message: 'Internal Error' });
+      return;
+    }
+  }
 }

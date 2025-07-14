@@ -37,7 +37,7 @@ export class RecipeService {
     return;
   }
 
-  public async getRecipeById(id: string): Promise<Recipe> {
+  public async getRecipeById(id: string): Promise<Recipe | null> {
     const recipe = await this.recipeRepo.findById(id);
 
     if (!recipe) {

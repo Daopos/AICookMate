@@ -1,24 +1,21 @@
 import { useEffect, useState } from "react";
 import type { Recipes } from "../types/Recipe";
-import { useSelector } from "react-redux";
-import type { RootState } from "../store/store";
 import recipeService from "../services/recipeService";
 
-export const useRecipe = () => {
-  const token = useSelector((state: RootState) => state.auth.token);
-
-  const [recipes, setRecipes] = useState<Recipes[]>([]);
+export const useRecipeById = (id: string) => {
+  const [recipe, setRecipe] = useState<Recipes | null>();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>();
+
   useEffect(() => {
-    getRecipes();
+    getRecipeById();
   }, []);
-  const getRecipes = async () => {
+
+  const getRecipeById = async () => {
     try {
       setLoading(true);
-
-      const response = await recipeService.getRecipes(token!);
-      setRecipes(response);
+      const response = await recipeService.getRecipeById(id);
+      setRecipe(response);
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
@@ -31,5 +28,5 @@ export const useRecipe = () => {
     }
   };
 
-  return { recipes, loading, error, getRecipes };
+  return { recipe, loading, error };
 };
