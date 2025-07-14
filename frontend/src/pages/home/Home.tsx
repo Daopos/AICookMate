@@ -8,7 +8,10 @@ const Home = () => {
       style={{ minHeight: "100vh", backgroundColor: "#D9EAFD" }}
     >
       <Sidebar />
-      <main className="w-100 p-4">
+      <main
+        className="w-100 p-4"
+        style={{ marginLeft: "250px", flex: 1, padding: "20px" }}
+      >
         <Outlet />
       </main>
     </div>

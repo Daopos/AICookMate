@@ -69,4 +69,5 @@ export default {
   savedRecipe,
   getRecipes,
   getRecipeById,
+  deleteRecipeById,
 };

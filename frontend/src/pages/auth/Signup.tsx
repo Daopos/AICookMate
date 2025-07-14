@@ -1,7 +1,7 @@
 import { Button, Form } from "react-bootstrap";
 import style from "./Login.module.css";
 import GoogleIcon from "../../assets/images/google.png";
-import FacebookIcon from "../../assets/images/facebook.png";
+// import FacebookIcon from "../../assets/images/facebook.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, type FormEvent } from "react";
 import authService from "../../services/authService";
@@ -113,11 +113,6 @@ const Signup = () => {
           <Button variant="light" className="w-25">
             <a href="">
               <img src={GoogleIcon} alt="" width={30} />
-            </a>
-          </Button>
-          <Button variant="light" className="w-25">
-            <a href="">
-              <img src={FacebookIcon} alt="" width={30} />
             </a>
           </Button>
         </div>

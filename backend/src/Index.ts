@@ -4,6 +4,11 @@ import { AppDataSource } from './config/data-source';
 import cors from 'cors';
 import GeminiRoutes from '../src/routes/GeminiRoute';
 import RecipeRoutes from '../src/routes/RecipeRoute';
+import passport, { Profile } from 'passport';
+import './passport';
+import session from 'express-session';
+
+import { Request, Response } from 'express';
 
 declare module 'express' {
   interface Request {
@@ -20,6 +25,37 @@ app.use(
     credentials: true,
   })
 );
+app.use(
+  session({
+    secret: 'your-secret',
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session()); // ← this enables req.user
+
+app.get(
+  '/auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+app.get(
+  '/auth/google/callback',
+  passport.authenticate('google', {
+    successRedirect: '/protected',
+    failureRedirect: '/login',
+  })
+);
+
+app.get('/protected', (req: Request, res: Response) => {
+  if (!req.user) res.status(401).send('Not authorized');
+
+  // Type-safe access if using TypeScript
+  const user = req.user as Profile;
+
+  res.send(user);
+});
 
 app.use('/api/v1/user', UserRoutes);
 app.use('/api/v1', GeminiRoutes);
