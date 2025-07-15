@@ -4,11 +4,12 @@ import { AppDataSource } from './config/data-source';
 import cors from 'cors';
 import GeminiRoutes from '../src/routes/GeminiRoute';
 import RecipeRoutes from '../src/routes/RecipeRoute';
-import passport, { Profile } from 'passport';
+import passport from 'passport';
 import './passport';
 import session from 'express-session';
 
-import { Request, Response } from 'express';
+import { generateToken } from './util/generateToken';
+import { User } from './entities/User';
 
 declare module 'express' {
   interface Request {
@@ -42,20 +43,18 @@ app.get(
 );
 app.get(
   '/auth/google/callback',
-  passport.authenticate('google', {
-    successRedirect: '/protected',
-    failureRedirect: '/login',
-  })
+  passport.authenticate('google', { session: false }), // NOTE: session: false
+  (req, res) => {
+    console.log('User object:', req.user); // Debug this first
+
+    const user = req.user as User; // Assert the type
+    const token = generateToken(user.id);
+
+    res.redirect(
+      `http://localhost:5173/redirect?token=${token}&name=${user.name}`
+    );
+  }
 );
-
-app.get('/protected', (req: Request, res: Response) => {
-  if (!req.user) res.status(401).send('Not authorized');
-
-  // Type-safe access if using TypeScript
-  const user = req.user as Profile;
-
-  res.send(user);
-});
 
 app.use('/api/v1/user', UserRoutes);
 app.use('/api/v1', GeminiRoutes);

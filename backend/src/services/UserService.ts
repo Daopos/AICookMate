@@ -17,6 +17,23 @@ export class UserService {
     return await this.userRepo.findById(id);
   }
 
+  public async createUserByGoogle(
+    data: Partial<User>,
+    id: string
+  ): Promise<User | null> {
+    const user = await this.userRepo.findByProviderId(id);
+
+    if (user) {
+      return user;
+    }
+
+    return await this.userRepo.create(data);
+  }
+
+  public async getUserByProviderId(id: string): Promise<User | null> {
+    return await this.userRepo.findByProviderId(id);
+  }
+
   public async loginUser(
     email: string,
     password: string

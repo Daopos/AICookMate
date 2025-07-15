@@ -110,10 +110,14 @@ const Signup = () => {
         </Form>
         <div className={style.orDivider}>or</div>
         <div className="d-flex justify-content-center gap-4 pt-2">
-          <Button variant="light" className="w-25">
-            <a href="">
-              <img src={GoogleIcon} alt="" width={30} />
-            </a>
+          <Button
+            variant="light"
+            className="w-25"
+            onClick={() => {
+              window.location.href = "http://localhost:3000/auth/google"; // ✅
+            }}
+          >
+            <img src={GoogleIcon} alt="" width={30} />
           </Button>
         </div>
         <p className="text-center pt-3">

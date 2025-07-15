@@ -9,6 +9,7 @@ import Display from "./pages/home/Display";
 import Recipe from "./pages/home/Recipe";
 import Saved from "./pages/home/Saved";
 import ViewRecipe from "./pages/home/ViewRecipe";
+import Redirect from "./pages/home/Redirect";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
               <Route path="/saved/:id" element={<ViewRecipe />} />
             </Route>
           </Route>
+          <Route path="/redirect" element={<Redirect />} />
         </Routes>
       </BrowserRouter>
     </>

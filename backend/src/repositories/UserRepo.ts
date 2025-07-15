@@ -22,4 +22,8 @@ export class UserRepo implements IUser {
   public async findByEmail(email: string): Promise<User | null> {
     return await this.repo.findOneBy({ email: email });
   }
+
+  public async findByProviderId(id: string): Promise<User | null> {
+    return await this.repo.findOneBy({ provider_id: id });
+  }
 }
