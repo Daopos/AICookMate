@@ -49,7 +49,7 @@ const Login = () => {
         <h1 className={`${style.logoText}`}>AICookMate</h1>
         <h2 className="fw-bold ">Login</h2>
         {error && (
-          <Form.Text className="text-muted">Invalid Credentials</Form.Text>
+          <Form.Text className="text-danger">Invalid Credentials</Form.Text>
         )}
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
